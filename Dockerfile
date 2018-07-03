@@ -26,7 +26,8 @@ RUN chmod +x /root/install.sh && sync && /root/install.sh
 
 # 启动参数
 ENV TARS_BIND_INTERFACE eth0
-ENV TARS_REGISTRY registry.tars.com
+ENV TARS_REGISTRY_HOST registry.tars.com
+ENV TARS_REGISTRY_PORT 17890
 
 # 创建入口
 COPY entrypoint.sh /root/entrypoint.sh

@@ -81,7 +81,7 @@ fi
 LOCAL_IP=$(ip addr | grep inet | grep ${TARS_BIND_INTERFACE} | awk '{print $2;}' | sed 's|/.*$||')
 
 # 替换配置
-sed -i "s/locator=tars.tarsregistry.QueryObj@tcp -h .* -p/locator=tars.tarsregistry.QueryObj@tcp -h ${TARS_REGISTRY} -p/g" /usr/local/app/tars/tarsnode/conf/tarsnode.conf
+sed -i "s/locator=tars.tarsregistry.QueryObj@tcp -h .* -p .*/locator=tars.tarsregistry.QueryObj@tcp -h ${TARS_REGISTRY_HOST} -p ${TARS_REGISTRY_PORT}/g" /usr/local/app/tars/tarsnode/conf/tarsnode.conf
 sed -i "s/localip=.*/localip=${LOCAL_IP}/g" /usr/local/app/tars/tarsnode/conf/tarsnode.conf
 sed -i "s/endpoint=tcp -h .* -p/endpoint=tcp -h ${LOCAL_IP} -p/g" /usr/local/app/tars/tarsnode/conf/tarsnode.conf
 
