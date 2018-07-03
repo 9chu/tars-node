@@ -6,9 +6,9 @@
 
 ## 使用样例
 
-    ```shell
-    docker run -v /Users/chu/Docker/node1:/data -e TARS_REGISTRY_HOST=myreg.example.com -d --name node1 9chu/tars-node
-    ```
+```shell
+docker run -v /Users/chu/Docker/node1:/data -e TARS_REGISTRY_HOST=myreg.example.com -d --name node1 9chu/tars-node
+```
 
 ## 基本参数
 
