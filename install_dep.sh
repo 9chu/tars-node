@@ -8,7 +8,7 @@ git clone https://github.com/mysql/mysql-server --branch=5.6 --depth=1 mysql-ser
 mkdir -p mysql-server/_build
 cd mysql-server/_build
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/mysql-5.6 -DWITH_INNOBASE_STORAGE_ENGINE=1 -DMYSQL_USER=mysql -DDEFAULT_CHARSET=utf8 -DDEFAULT_COLLATION=utf8_general_ci
-make -j5 && make install && make clean
+make -j $(nproc) && make install && make clean
 ln -s /usr/local/mysql-5.6 /usr/local/mysql
 
 # 安装Java-SDK
