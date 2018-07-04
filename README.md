@@ -37,6 +37,12 @@ docker run -v /Users/chu/Docker/node1:/data -e TARS_REGISTRY_HOST=myreg.example.
         /data/patch：补丁目录。
         /data/node：连接到tarsnode/data，亦为其他服务的部署目录。
 
+## 暴露端口
+
+- 19385
+
+    节点端口，当前容器的节点对外暴露的服务端口。
+
 ## 参考
 
 - https://github.com/tangramor/tars-node

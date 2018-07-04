@@ -24,6 +24,9 @@ ENV LC_ALL "zh_CN.UTF-8"
 COPY install.sh /root/install.sh
 RUN chmod +x /root/install.sh && sync && /root/install.sh
 
+# 暴露端口
+EXPOSE 19385
+
 # 启动参数
 ENV TARS_BIND_INTERFACE eth0
 ENV TARS_REGISTRY_HOST registry.tars.com
