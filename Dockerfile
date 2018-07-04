@@ -21,6 +21,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
 ENV LC_ALL "zh_CN.UTF-8"
 
 # 执行安装脚本
+COPY install_dep.sh /root/install_dep.sh
+RUN chmod +x /root/install_dep.sh && sync && /root/install_dep.sh
+
 COPY install.sh /root/install.sh
 RUN chmod +x /root/install.sh && sync && /root/install.sh
 
