@@ -24,6 +24,18 @@ docker run -v /Users/chu/Docker/node1:/data -e TARS_REGISTRY_HOST=myreg.example.
 
     指定注册表的端口。默认为17890。
 
+- OPENVPN_ENABLE
+
+    是否启用OpenVPN，用于组建跨机器部署的环境。默认为0。
+
+- OPENVPN_CONFIG
+
+    指定OpenVPN客户端配置文件。默认为/data/node.ovpn。
+
+- OPENVPN_LOG
+
+    指定OpenVPN的日志文件路径。默认为/data/log/openvpn.log。
+
 ## 挂载目录
 
 - /data
