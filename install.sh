@@ -55,10 +55,15 @@ chmod +x thirdparty.sh && sync
 mkdir -p /data
 cd /root/source/Tars/cpp/build
 chmod u+x build.sh && sync
-./build.sh all && ./build.sh install && make clean
+./build.sh all && sync && ./build.sh install && sync
 make framework-tar && make tarsstat-tar && make tarsnotify-tar && make tarsproperty-tar && make tarslog-tar && make tarsquerystat-tar && make tarsqueryproperty-tar
-mkdir -p /usr/local/app/tars/ && cd /usr/local/app/tars/
-tar zxvf /root/source/Tars/cpp/build/framework.tgz
+make clean
+mkdir -p /usr/local/app/tars/ && cd /usr/local/app/tars/ && sync
+tar zxvf /root/source/Tars/cpp/build/framework.tgz && sync
+if [ ! -f "/usr/local/app/tars/tarsnode/conf/tarsnode.conf" ]; then
+    (>&2 echo "unknown error")
+    exit 1
+fi
 
 # 编译JAVA部分
 #proxy_mvn='mvn -Dhttp.proxyHost=dev-proxy.oa.com -Dhttp.proxyPort=8080 -Dhttp.nonProxyHosts=localhost -Dhttps.proxyHost=dev-proxy.oa.com -Dhttps.proxyPort=8080 -Dhttps.nonProxyHosts=localhost'
