@@ -80,11 +80,15 @@ fi
 # 启动OPENVPN
 if [ ${OPENVPN_ENABLE} -ne 0 ]; then
     openvpn --daemon --config ${OPENVPN_CONFIG} --log-append ${OPENVPN_LOG}
-    sleep 1
+    sleep 3
 fi
 
 # 获取本机信息
 LOCAL_IP=$(ip addr | grep inet | grep ${TARS_BIND_INTERFACE} | awk '{print $2;}' | sed 's|/.*$||')
+if [[ -z "$LOCAL_IP" ]]; then
+    (>&2 echo "cannot retrieve IP address")
+    exit 1
+fi
 
 # 替换配置
 sed -i -r "s/locator\s*=\s*tars.tarsregistry.QueryObj@tcp\s+-h\s+.*\s+-p\s+.*/locator=tars.tarsregistry.QueryObj@tcp -h ${TARS_REGISTRY_HOST} -p ${TARS_REGISTRY_PORT}/g" /usr/local/app/tars/tarsnode/conf/tarsnode.conf
