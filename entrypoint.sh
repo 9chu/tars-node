@@ -77,6 +77,12 @@ if [ ! -d /usr/local/app/patchs ]; then
     ln -s /data/patch /usr/local/app/patchs
 fi
 
+# 启动OPENVPN
+if [ ${OPENVPN_ENABLE} -ne 0 ]; then
+    openvpn --daemon --config ${OPENVPN_CONFIG} --log-append ${OPENVPN_LOG}
+    sleep 1
+fi
+
 # 获取本机信息
 LOCAL_IP=$(ip addr | grep inet | grep ${TARS_BIND_INTERFACE} | awk '{print $2;}' | sed 's|/.*$||')
 
