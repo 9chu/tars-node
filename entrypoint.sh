@@ -65,6 +65,10 @@ if [ ! -d /data/node ]; then
     mkdir -p /data/node
 fi
 
+if [ ! -d /data/patch/tars.upload ]; then
+    mkdir -p /data/patch/tars.upload
+fi
+
 if [ ! -d /usr/local/app/tars/tarsnode/data ]; then
     ln -s /data/node /usr/local/app/tars/tarsnode/data
 fi
