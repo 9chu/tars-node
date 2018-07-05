@@ -10,6 +10,14 @@
 docker run -v /Users/chu/Docker/node1:/data -e TARS_REGISTRY_HOST=myreg.example.com -d --name node1 9chu/tars-node
 ```
 
+当启用OpenVPN时：
+
+```shell
+docker run -v /Users/chu/Docker/node1:/data --cap-add NET_ADMIN -e OPENVPN_ENABLE=1 -e OPENVPN_CONFIG=/data/node1.ovpn -e TARS_REGISTRY_HOST=myreg.example.com -d --name node1 9chu/tars-node
+```
+
+注意：OpenVPN应当分配静态IP地址。
+
 ## 基本参数
 
 - TARS_BIND_INTERFACE

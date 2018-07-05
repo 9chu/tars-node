@@ -79,14 +79,32 @@ fi
 
 # 启动OPENVPN
 if [ ${OPENVPN_ENABLE} -ne 0 ]; then
+    echo "Starting openvpn..."
+    mkdir -p /dev/net
+    if [ ! -c /dev/net/tun ]; then
+        mknod /dev/net/tun c 10 200
+    fi
     openvpn --daemon --config ${OPENVPN_CONFIG} --log-append ${OPENVPN_LOG}
-    sleep 3
+
+    echo "Waitting network device..."
+    n=0
+    until [ $n -ge 5 ]
+    do
+        LOCAL_IP=$(ip addr | grep inet | grep ${TARS_BIND_INTERFACE} | awk '{print $2;}' | sed 's|/.*$||')
+        if [[ -z "$LOCAL_IP" ]]; then
+            echo "Network device is not ready"
+            sleep 1
+        else
+            break
+        fi
+        n=$[$n+1]
+    done
 fi
 
 # 获取本机信息
 LOCAL_IP=$(ip addr | grep inet | grep ${TARS_BIND_INTERFACE} | awk '{print $2;}' | sed 's|/.*$||')
 if [[ -z "$LOCAL_IP" ]]; then
-    (>&2 echo "cannot retrieve IP address")
+    (>&2 echo "ERROR: Cannot retrieve IP address")
     exit 1
 fi
 
@@ -96,12 +114,15 @@ sed -i -r "s/localip\s*=\s*.*/localip=${LOCAL_IP}/g" /usr/local/app/tars/tarsnod
 sed -i -r "s/endpoint\s*=\s*tcp\s+-h\s+.*\s+-p/endpoint=tcp -h ${LOCAL_IP} -p/g" /usr/local/app/tars/tarsnode/conf/tarsnode.conf
 
 # 拉起tarsnode
+echo "Starting tarsnode..."
 chmod u+x /usr/local/app/tars/tarsnode/util/*.sh
 chmod u+x /usr/local/app/tars/tarsnode_install.sh && sync && /usr/local/app/tars/tarsnode_install.sh
 
 # 配置crontab
+echo "Starting crontab..."
 grep -q -F "* * * * * root /usr/local/app/tars/tarsnode/util/monitor.sh" /etc/crontab || echo "* * * * * root /usr/local/app/tars/tarsnode/util/monitor.sh" >> /etc/crontab
 crond
 
 # 不退出
+echo "Service is started"
 tail -f /dev/null
