@@ -4,8 +4,7 @@ set -e
 ### TARS安装脚本
 # 克隆Tars
 mkdir -p /root/source && cd /root/source
-# 临时用fork的仓库，解决一些BUG
-git clone https://github.com/9chu/Tars --depth=1 Tars
+git clone https://github.com/Tencent/Tars --depth=1 Tars
 cd Tars/cpp/thirdparty
 chmod +x thirdparty.sh && sync
 ./thirdparty.sh
